@@ -34,6 +34,9 @@ public class UserController {
         } else if (!userInfo.getPassword().equals(userInfo.getPasswordPlainText())) {
             return ResponseEntity.badRequest().body("User passwords are not matching!");
         }
+        else if(!ObjectUtils.isEmpty(userRepository.findUserByUsername(userInfo.getUsername()))){
+            return ResponseEntity.badRequest().body("Username is in use!");
+        }
         String cryptedPassword = bCryptPasswordEncoder.encode(userInfo.getPassword());
         User newUser = User.builder().username(userInfo.getUsername())
                 .password(cryptedPassword)
