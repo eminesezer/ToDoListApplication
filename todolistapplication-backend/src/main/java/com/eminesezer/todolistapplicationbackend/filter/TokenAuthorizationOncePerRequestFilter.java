@@ -35,12 +35,14 @@ public class TokenAuthorizationOncePerRequestFilter extends OncePerRequestFilter
     @Value("${jwt.http.request.header}")
     private String tokenHeader;
 
+    @Value("${jwt.get.token.uri}")
+    private String authenticationPath;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         log.debug("Authentication Request For '{}'", request.getRequestURL());
 
         final String requestTokenHeader = request.getHeader(this.tokenHeader);
-
         String username = null;
         String jwtToken = null;
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {

@@ -1,6 +1,7 @@
 package com.eminesezer.todolistapplicationbackend.entity;
 
 import com.eminesezer.todolistapplicationbackend.enumaration.AuthorityType;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Table(name = "users")
+@Builder(toBuilder = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

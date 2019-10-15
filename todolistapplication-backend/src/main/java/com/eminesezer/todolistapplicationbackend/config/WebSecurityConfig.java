@@ -39,10 +39,10 @@ public class WebSecurityConfig
   @Autowired
   private TokenAuthorizationOncePerRequestFilter tokenAuthorizationOncePerRequestFilter;
 
-//  @Value("${jwt.get.token.uri}")
-  private String authenticationPath="/authenticate";
-  //@Value("${spring.h2.console.path}")
-  private String url="/database";
+  @Value("${jwt.get.token.uri}")
+  private String authenticationPath;
+  @Value("${spring.h2.console.path}")
+  private String url;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
