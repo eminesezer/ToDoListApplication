@@ -1,6 +1,6 @@
 package com.eminesezer.todolistapplicationbackend.util;
 
-import com.eminesezer.todolistapplicationbackend.services.impl.UserDetailsImpl;
+import com.eminesezer.todolistapplicationbackend.model.LoginUserModel;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -88,7 +88,7 @@ public class TokenUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        UserDetailsImpl user = (UserDetailsImpl) userDetails;
+        LoginUserModel user = (LoginUserModel) userDetails;
         final String username = getUsernameFromToken(token);
         return (username.equals(user.getUsername()) && !isTokenExpired(token));
     }

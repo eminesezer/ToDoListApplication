@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:30000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ToDoListController {
     @Autowired
     UserRepository userRepository;
@@ -35,7 +37,7 @@ public class ToDoListController {
         return toDoListRepository.findToDoListsByUserId(userId);
     }
 
-    @PostMapping("/{username}/delete/{todo}")
+    @DeleteMapping("/{username}/delete/{todo}")
     public ResponseEntity<Object> deleteTodoList(@PathVariable String username, @PathVariable int todo) {
         if (username.isEmpty() || ObjectUtils.isEmpty(todo)) {
             return ResponseEntity.badRequest().body("Details for delete this todo list is not allowed.");
@@ -45,9 +47,9 @@ public class ToDoListController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{username}/save/{todo}")
-    public ResponseEntity<Void> saveToDoList(@PathVariable String username, @PathVariable int todo, @RequestBody String todoList) {
-        if (username.isEmpty() || ObjectUtils.isEmpty(todo) || ObjectUtils.isEmpty(todoList)) {
+    @PostMapping("/{username}/save/")
+    public ResponseEntity<Void> saveToDoList(@PathVariable String username, @RequestBody String todoList) {
+        if (username.isEmpty() || ObjectUtils.isEmpty(todoList)) {
             return null;
         }
         int userId = userRepository.findUserByUsername(username).getId();
@@ -55,7 +57,7 @@ public class ToDoListController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{username}/update/{todo}")
+    @PutMapping("/{username}/update/{todo}")
     public ResponseEntity<Void> updateTodoList(@PathVariable String username, @PathVariable int todo, @RequestBody String todoList) {
         if (username.isEmpty() || ObjectUtils.isEmpty(todo) || ObjectUtils.isEmpty(todoList)) {
             return null;

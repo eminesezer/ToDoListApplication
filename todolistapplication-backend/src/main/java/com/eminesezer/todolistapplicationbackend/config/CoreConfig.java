@@ -26,3 +26,21 @@ public class CoreConfig {
         return registrationBean;
     }
 }
+/*
+
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+
+        registry.addMapping("/api/**")
+                .allowedOrigins("https://localhost:3000")
+                .allowedMethods("PUT", "DELETE")
+                .allowedHeaders("header1", "header2", "header3")
+                .exposedHeaders("header1", "header2")
+                .allowCredentials(true).maxAge(3600);
+    }
+}
+
+ */

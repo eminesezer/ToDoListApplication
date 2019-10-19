@@ -1,8 +1,10 @@
 package com.eminesezer.todolistapplicationbackend.entity;
 
 import com.eminesezer.todolistapplicationbackend.enumaration.ToDoStatus;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,26 +13,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
-
-@Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name = "todos")
-@Builder(toBuilder = true)
 public class ToDoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "todo_name")
+    @Column(name = "todo_name", length = 100)
     private String todoName;
 
-    @Column(name = "todo_description")
+    @Column(name = "todo_description", length = 100)
     private String todoDescription;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", length = 10)
     private int userId;
 
-    @Column(name = "todo_list_id")
+    @Column(name = "todo_list_id", length = 10)
     private int todoListId;
 
     @Column(name = "insert_date")
@@ -45,6 +48,7 @@ public class ToDoItem {
     @Column(name = "is_dependent")
     private boolean isDependent;
 
-    @Column(name = "dependent_todos")
+    @Column(name = "dependent_todos", length = 10)
     private int dependentTodos;
+
 }

@@ -42,6 +42,8 @@ public class TokenAuthorizationOncePerRequestFilter extends OncePerRequestFilter
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         log.debug("Authentication Request For '{}'", request.getRequestURL());
 
+        log.info("Authentication Request For '{}'", request.getRequestURL());
+
         final String requestTokenHeader = request.getHeader(this.tokenHeader);
         String username = null;
         String jwtToken = null;
