@@ -34,7 +34,7 @@ public class WebSecurityConfig
   private UnAuthorizedResponseAuthenticationEntryPoint unAuthorizedResponseAuthenticationEntryPoint;
 
   @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  private UserDetailsService userDetailsServiceImpl;
 
   @Autowired
   private TokenAuthorizationOncePerRequestFilter tokenAuthorizationOncePerRequestFilter;
@@ -47,7 +47,7 @@ public class WebSecurityConfig
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth
-            .userDetailsService(userDetailsService)
+            .userDetailsService(userDetailsServiceImpl)
             .passwordEncoder(bCryptPasswordEncoder());
   }
   @Bean

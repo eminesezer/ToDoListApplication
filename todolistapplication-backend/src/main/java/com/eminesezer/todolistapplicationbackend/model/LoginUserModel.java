@@ -11,6 +11,7 @@ import java.util.Collections;
 
 @AllArgsConstructor
 public class LoginUserModel implements UserDetails {
+    private static final long serialVersionUID = -5484603510569506848L;
     private User user;
 
     @Override

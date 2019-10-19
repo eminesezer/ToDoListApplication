@@ -19,9 +19,7 @@ import java.util.function.Function;
 @Component
 public class TokenUtil implements Serializable {
 
-    static final String CLAIM_KEY_USERNAME = "sub";
-    static final String CLAIM_KEY_CREATED = "iat";
-    private static final long serialVersionUID = -3301605591108950415L;
+    private static final long serialVersionUID = -1136030217620956070L;
     private Clock clock = DefaultClock.INSTANCE;
 
     @Value("${jwt.signing.key.secret}")

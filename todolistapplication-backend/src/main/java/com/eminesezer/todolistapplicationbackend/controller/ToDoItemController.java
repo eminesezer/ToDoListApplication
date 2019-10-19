@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +44,7 @@ public class ToDoItemController {
         return toDoItemRepository.findToDoItemsByUserIdAndTodoListIdAndTodoStatusIn(userId, todo, status);
     }
 
-    @PostMapping("/{username}/{todo}/delete/{id}")
+    @DeleteMapping("/{username}/{todo}/delete/{id}")
     public ResponseEntity<Object> deleteTodoItem(@PathVariable String username, @PathVariable int todo, @PathVariable int id) {
         if (username.isEmpty() || ObjectUtils.isEmpty(todo) || ObjectUtils.isEmpty(id)) {
             return ResponseEntity.badRequest().body("Details for delete this todo is not allowed.");
@@ -71,7 +73,7 @@ public class ToDoItemController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{username}/{todo}/update/{id}")
+    @PutMapping("/{username}/{todo}/update/{id}")
     public ResponseEntity<Void> updateTodoItem(@PathVariable String username, @PathVariable int todo, @PathVariable int id, @RequestBody ToDoItemRequest updatedTodoVersion) {
         if (username.isEmpty() || ObjectUtils.isEmpty(todo) || ObjectUtils.isEmpty(id)) {
             return null;
