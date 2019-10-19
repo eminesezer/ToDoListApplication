@@ -16,10 +16,6 @@ class ListTodosComponent extends Component {
         this.refreshTodos = this.refreshTodos.bind(this)
     }
 
-    componentWillUnmount() {
-        console.log('componentWillUnmount')
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         console.log('shouldComponentUpdate')
         console.log(nextProps)
@@ -65,6 +61,10 @@ class ListTodosComponent extends Component {
         let username = AuthenticationService.getLoggedInUserName()
         this.props.history.push(`${username}/todos/${id}`)
     }
+    showAllTodoItemsOfList(id){
+        let username = AuthenticationService.getLoggedInUserName()
+        this.props.history.push(`${username}/${id}/todos`)
+    }
 
     render() {
         console.log('render')
@@ -74,10 +74,14 @@ class ListTodosComponent extends Component {
                 <h1>List Todos</h1>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
                 <div className="container">
+                    <div className="row">
+                        <button className="btn btn-success" onClick={this.addTodoClicked}>Add</button>
+                    </div>
                     <table className="table">
                         <thead>
                         <tr>
                             <th>Description</th>
+                            <th>List Items</th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
@@ -88,16 +92,14 @@ class ListTodosComponent extends Component {
                                 todo =>
                                     <tr key={todo.id}>
                                         <td>{todo.todoListName}</td>
-                                        <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(todo.id)}>Update</button></td>
-                                        <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
+                                        <td><button className="btn btn-success" onClick={() => this.showAllTodoItemsOfList(todo.id)}>List Items</button></td>
+                                        <td><button className="btn btn-warning" onClick={() => this.updateTodoClicked(todo.id)}>Update</button></td>
+                                        <td><button className="btn btn-danger" onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
                                     </tr>
                             )
                         }
                         </tbody>
                     </table>
-                    <div className="row">
-                        <button className="btn btn-success" onClick={this.addTodoClicked}>Add</button>
-                    </div>
                 </div>
             </div>
         )

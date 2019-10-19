@@ -37,6 +37,15 @@ public class ToDoListController {
         return toDoListRepository.findToDoListsByUserId(userId);
     }
 
+    @GetMapping("/{username}/todos/{todo}")
+    public ToDoList getTodoList(@PathVariable String username, @PathVariable int todo) {
+        if (username.isEmpty() || ObjectUtils.isEmpty(todo)) {
+            return null;
+        }
+        int userId = userRepository.findUserByUsername(username).getId();
+        return toDoListRepository.findToDoListsByUserIdAndId(userId, todo);
+    }
+
     @DeleteMapping("/{username}/delete/{todo}")
     public ResponseEntity<Object> deleteTodoList(@PathVariable String username, @PathVariable int todo) {
         if (username.isEmpty() || ObjectUtils.isEmpty(todo)) {

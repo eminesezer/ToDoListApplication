@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import moment from 'moment'
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import TodoDataService from '../api/ToDoListService.js'
 import AuthenticationService from '../authentication/AuthenticationService.js'
@@ -11,7 +10,6 @@ class ToDoListComponent extends Component {
         this.state = {
             id: this.props.match.params.id,
             todoListName: '',
-            targetDate: moment(new Date()).format('YYYY-MM-DD')
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -29,8 +27,7 @@ class ToDoListComponent extends Component {
 
         TodoDataService.getTodoList(username, this.state.id)
             .then(response => this.setState({
-                todoListName: response.data.todoListName,
-                targetDate: moment(response.data.targetDate).format('YYYY-MM-DD')
+                todoListName: response.data.todoListName
             }))
     }
 
@@ -38,12 +35,8 @@ class ToDoListComponent extends Component {
         let errors = {}
         if (!values.todoListName) {
             errors.todoListName = 'Enter a Description'
-        } else if (values.description.length < 5) {
-            errors.description = 'Enter atleast 5 Characters in Description'
-        }
-
-        if (!moment(values.targetDate).isValid()) {
-            errors.targetDate = 'Enter a valid Target Date'
+        } else if (values.todoListName.length < 5) {
+            errors.todoListName = 'Enter atleast 5 Characters in Description'
         }
 
         return errors
@@ -55,16 +48,15 @@ class ToDoListComponent extends Component {
 
         let todo = {
             id: this.state.id,
-            description: values.description,
-            targetDate: values.targetDate
+            todoListName: values.todoListName
         }
 
         if (this.state.id === -1) {
-            TodoDataService.createTodo(username, todo)
-                .then(() => this.props.history.push('/todos'))
+            TodoDataService.createTodoList(username, todo)
+                .then(() => this.props.history.push('/todolists'))
         } else {
-            TodoDataService.updateTodo(username, this.state.id, todo)
-                .then(() => this.props.history.push('/todos'))
+            TodoDataService.updateTodoList(username, this.state.id, todo)
+                .then(() => this.props.history.push('/todolists'))
         }
 
         console.log(values);
@@ -72,7 +64,7 @@ class ToDoListComponent extends Component {
 
     render() {
 
-        let {description, targetDate} = this.state
+        let {todoListName} = this.state
         //let targetDate = this.state.targetDate
 
         return (
@@ -80,7 +72,7 @@ class ToDoListComponent extends Component {
                 <h1>Todo</h1>
                 <div className="container">
                     <Formik
-                        initialValues={{description, targetDate}}
+                        initialValues={{ todoListName }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -90,17 +82,10 @@ class ToDoListComponent extends Component {
                         {
                             (props) => (
                                 <Form>
-                                    <ErrorMessage name="description" component="div"
-                                                  className="alert alert-warning"/>
-                                    <ErrorMessage name="targetDate" component="div"
+                                    <ErrorMessage name="todoListName" component="div"
                                                   className="alert alert-warning"/>
                                     <fieldset className="form-group">
-                                        <label>Description</label>
-                                        <Field className="form-control" type="text" name="description"/>
-                                    </fieldset>
-                                    <fieldset className="form-group">
-                                        <label>Target Date</label>
-                                        <Field className="form-control" type="date" name="targetDate"/>
+                                        <label>todoListName</label>
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>
                                 </Form>

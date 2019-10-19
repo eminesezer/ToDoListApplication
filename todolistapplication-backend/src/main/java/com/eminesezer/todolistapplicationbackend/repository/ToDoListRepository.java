@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface ToDoListRepository extends JpaRepository<ToDoList, Integer> {
     List<ToDoList> findToDoListsByUserId(int userId);
+
     ToDoList findToDoListByUserId(int userId);
+
+    ToDoList findToDoListsByUserIdAndId(int userId, int id);
 }
