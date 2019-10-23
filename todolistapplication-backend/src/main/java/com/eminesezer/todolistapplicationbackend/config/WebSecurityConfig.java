@@ -34,20 +34,20 @@ public class WebSecurityConfig
   private UnAuthorizedResponseAuthenticationEntryPoint unAuthorizedResponseAuthenticationEntryPoint;
 
   @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  private UserDetailsService userDetailsServiceImpl;
 
   @Autowired
   private TokenAuthorizationOncePerRequestFilter tokenAuthorizationOncePerRequestFilter;
 
-//  @Value("${jwt.get.token.uri}")
-  private String authenticationPath="/authenticate";
-  //@Value("${spring.h2.console.path}")
-  private String url="/database";
+  @Value("${jwt.get.token.uri}")
+  private String authenticationPath;
+  @Value("${spring.h2.console.path}")
+  private String url;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth
-            .userDetailsService(userDetailsService)
+            .userDetailsService(userDetailsServiceImpl)
             .passwordEncoder(bCryptPasswordEncoder());
   }
   @Bean

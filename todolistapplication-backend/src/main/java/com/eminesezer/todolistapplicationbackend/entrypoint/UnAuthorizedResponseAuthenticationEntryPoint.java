@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Component
 public class UnAuthorizedResponseAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
-    private static final long serialVersionUID = -8970718410437077606L;
+    private static final long serialVersionUID = 709768415524489043L;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
